@@ -8,6 +8,7 @@ import {
   Stack,
   Button,
 } from "@chakra-ui/react";
+import { useAuth } from "../context/userContext";
 
 type FormValues = {
   username: string;
@@ -16,13 +17,15 @@ type FormValues = {
 };
 
 const SignUpCard = () => {
+  const { signUp } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = (data) =>
-    console.log("data", data);
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    signUp(data.username, data.email, data.password);
+  };
 
   return (
     <Flex

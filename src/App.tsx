@@ -1,8 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavLayout from "./layout/NavLayout";
-import SignUp from "./pages/SignUp";
-import LogIn from "./pages/AuthenticationPage";
 import AuthPage from "./pages/AuthenticationPage";
 import LoginCard from "./components/LoginInCard";
 import SignUpCard from "./components/SignUpCard";
