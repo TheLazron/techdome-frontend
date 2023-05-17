@@ -24,7 +24,7 @@ const DeleteBlogModal = ({ blogId }: DeleteBlogModalProps) => {
 
   const deleteBlog = async (blogId: string) => {
     const response = await makeAuthenticatedRequest(
-      `http://localhost:3300/delete-blog/${blogId}`,
+      `https://techdome-backend-production.up.railway.app/delete-blog/${blogId}`,
       {},
       "DELETE",
       jwtToken

@@ -32,23 +32,29 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const signUp = async (name: string, email: string, password: string) => {
     console.log("singup func", email);
 
-    const data = await makeAxiosPostRequest("http://localhost:3300/signup", {
-      username: name,
-      email,
-      password,
-      profileUrl:
-        "https://st4.depositphotos.com/3864435/27060/i/450/depositphotos_270605520-stock-photo-default-avatar-profile-icon-grey.jpg",
-    });
+    const data = await makeAxiosPostRequest(
+      `https://techdome-backend-production.up.railway.app/signup`,
+      {
+        username: name,
+        email,
+        password,
+        profileUrl:
+          "https://st4.depositphotos.com/3864435/27060/i/450/depositphotos_270605520-stock-photo-default-avatar-profile-icon-grey.jpg",
+      }
+    );
     console.log(data);
     window.location.href = "/auth/login";
   };
 
   // Log in logic
   const logIn = async (email: string, password: string) => {
-    const data = await makeAxiosPostRequest("http://localhost:3300/login", {
-      email,
-      password,
-    });
+    const data = await makeAxiosPostRequest(
+      "https://techdome-backend-production.up.railway.app/login",
+      {
+        email,
+        password,
+      }
+    );
     console.log("loggedUser Data", data);
     setJwtToken(data.user.token);
     setCurrentUser({ id: data.user.userId as string });
@@ -61,7 +67,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const id = data.user.userId;
 
       const userData = await makeAuthenticatedRequest(
-        `http://localhost:3300/get-user/${id}`,
+        `https://techdome-backend-production.up.railway.app/get-user/${id}`,
         {},
         "GET",
         jwtToken
@@ -86,7 +92,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   // Sign out logic
   const signOut = () => {
     setCurrentUser(null);
-    window.location.href = "/blog";
+    window.location.href = "/home";
   };
 
   // Get the current user

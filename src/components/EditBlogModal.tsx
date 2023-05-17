@@ -62,7 +62,7 @@ const EditBlogModal = ({
     };
     console.log("blogData", blogData);
     const newBlog = await makeAuthenticatedRequest(
-      `http://localhost:3300/update-blog/${id}`,
+      `https://techdome-backend-production.up.railway.app/update-blog/${id}`,
       blogData,
       "POST",
       jwtToken

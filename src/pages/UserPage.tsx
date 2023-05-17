@@ -15,7 +15,7 @@ const UserPage = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       const data = await makeAuthenticatedRequest(
-        `http://localhost:3300/get-user/${userId}`,
+        `https://techdome-backend-production.up.railway.app/get-user/${userId}`,
         {},
         "GET",
         jwtToken

@@ -33,7 +33,7 @@ const BlogPage = (): JSX.Element => {
   useEffect(() => {
     const fetchBlogData = async () => {
       const data = await makeAuthenticatedRequest(
-        `http://localhost:3300/get-blog/${blogId}`,
+        `https://techdome-backend-production.up.railway.app/get-blog/${blogId}`,
         {},
         "GET",
         jwtToken

@@ -44,7 +44,7 @@ const CreateBlogModal = () => {
     };
     console.log("blogData", blogData);
     const newBlog = await makeAuthenticatedRequest(
-      "http://localhost:3300/create-blog",
+      "https://techdome-backend-production.up.railway.app/create-blog",
       blogData,
       "POST",
       jwtToken

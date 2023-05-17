@@ -21,7 +21,7 @@ const MyProfilePage = (): JSX.Element => {
   useEffect(() => {
     const fetchBlogs = async () => {
       const data = await makeAuthenticatedRequest(
-        "http://localhost:3300/get-my-blogs",
+        "https://techdome-backend-production.up.railway.app/get-my-blogs",
         {},
         "GET",
         jwtToken

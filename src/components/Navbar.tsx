@@ -14,8 +14,50 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { NavLink, To } from "react-router-dom";
+import { useAuth } from "../context/userContext";
+
+interface NavItem {
+  label: string;
+  variant?: "ghost" | "solid" | "link" | "outline" | "solid" | "unstyled";
+  href?: To;
+  styles?: {
+    bg?: string;
+    color?: string;
+  };
+}
+
+let navlink: any;
 
 const Navbar = () => {
+  const NAV_ITEMS: Array<NavItem> = [
+    { label: "Blog", href: "/home", variant: "ghost" },
+    {
+      label: "Sign Up",
+      href: "/auth/signup",
+      styles: { bg: "brand.black", color: "white" },
+    },
+    { label: "Sign In", href: "/auth/login", variant: "ghost" },
+  ];
+
+  const { getCurrentUser, signOut } = useAuth();
+  const loggedUser = getCurrentUser();
+
+  const navItems = loggedUser
+    ? [
+        ...NAV_ITEMS.filter(
+          (item) => item.label !== "Sign Up" && item.label !== "Sign In"
+        ),
+        {
+          label: "My Profile",
+          href: "/my-profile/",
+          variant: "ghost",
+          styles: { bg: "brand.black", color: "white" },
+        },
+      ]
+    : NAV_ITEMS;
+
+  navlink = navItems;
+
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -67,7 +109,7 @@ const Navbar = () => {
           direction={"row"}
           spacing={6}
         >
-          {NAV_ITEMS.map((navItem) => (
+          {navItems.map((navItem) => (
             <div key={navItem.label}>
               <NavLink to={navItem.href!}>
                 <Button
@@ -82,6 +124,11 @@ const Navbar = () => {
               </NavLink>
             </div>
           ))}
+          {loggedUser ? (
+            <Button onClick={signOut} colorScheme="blackAlpha">
+              Sign Out
+            </Button>
+          ) : null}
         </Stack>
       </Flex>
 
@@ -99,7 +146,7 @@ const MobileNav = () => {
       p={4}
       display={{ md: "none" }}
     >
-      {NAV_ITEMS.map((navItem) => (
+      {navlink.map((navItem: any) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
     </Stack>
@@ -131,25 +178,5 @@ const MobileNavItem = ({ label, href }: NavItem) => {
     </Stack>
   );
 };
-
-interface NavItem {
-  label: string;
-  variant?: "ghost" | "solid" | "link" | "outline" | "solid" | "unstyled";
-  href?: To;
-  styles?: {
-    bg?: string;
-    color?: string;
-  };
-}
-
-const NAV_ITEMS: Array<NavItem> = [
-  { label: "Blog", href: "/home", variant: "ghost" },
-  {
-    label: "Sign Up",
-    href: "/auth/signup",
-    styles: { bg: "brand.black", color: "white" },
-  },
-  { label: "Sign In", href: "/auth/login", variant: "ghost" },
-];
 
 export default Navbar;

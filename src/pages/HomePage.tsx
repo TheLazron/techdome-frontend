@@ -23,7 +23,7 @@ const HomePage = (): JSX.Element => {
   useEffect(() => {
     const fetchBlogs = async () => {
       const data = await makeAuthenticatedRequest(
-        "http://localhost:3300/get-paginated-blogs",
+        "https://techdome-backend-production.up.railway.app/get-paginated-blogs",
         {},
         "GET",
         jwtToken
@@ -33,16 +33,18 @@ const HomePage = (): JSX.Element => {
     };
     const fetchUsers = async () => {
       const data = await makeAuthenticatedRequest(
-        "http://localhost:3300/get-user-list",
+        "https://techdome-backend-production.up.railway.app/get-user-list",
         {},
         "GET",
         jwtToken
       );
       console.log(data);
       setUsers(data.data);
-      setUsers((users) => {
-        return users.filter((user: User) => user.email !== loggedUser.email);
-      });
+      if (loggedUser) {
+        setUsers((users) => {
+          return users.filter((user: User) => user.email !== loggedUser.email);
+        });
+      }
     };
 
     fetchBlogs();
@@ -89,6 +91,7 @@ const HomePage = (): JSX.Element => {
             ) : (
               users.map((user: User) => (
                 <UserCard
+                  key={user.id}
                   id={user.id}
                   name={user.name}
                   email={user.email}

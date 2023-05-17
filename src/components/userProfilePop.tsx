@@ -40,7 +40,7 @@ const UserPopOver = ({ username, profileUrl }: UserPopOverProps) => {
     console.log(data);
 
     const updatedUser = await makeAuthenticatedRequest(
-      "http://localhost:3300/update-user",
+      "https://techdome-backend-production.up.railway.app/update-user",
       {
         name: data.username,
         profileUrl: data.profileUrl,
