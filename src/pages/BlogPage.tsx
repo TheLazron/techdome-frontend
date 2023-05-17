@@ -21,6 +21,7 @@ import { ChevronRightIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import DividerComponent from "../components/ui/Divider";
 import RecommendationPanel from "../components/RecommendationPanel";
 import DeleteBlogModal from "../components/DeleteBlogModal";
+import EditBlogModal from "../components/EditBlogModal";
 
 const BlogPage = (): JSX.Element => {
   const { blogId } = useParams();
@@ -56,13 +57,12 @@ const BlogPage = (): JSX.Element => {
       {currentUser && currentUser.id === blog.userId ? (
         <Stack direction="row" alignSelf="flex-end" gap={2}>
           <DeleteBlogModal blogId={blog.id} />
-          <IconButton
-            p={2}
-            rounded={"full"}
-            colorScheme="gray"
-            size="md"
-            icon={<EditIcon />}
-            aria-label={""}
+          <EditBlogModal
+            id={blog.id}
+            title={blog.title}
+            description={blog.description}
+            content={blog.content}
+            tags={blog.tags}
           />
         </Stack>
       ) : null}

@@ -20,7 +20,7 @@ interface DeleteBlogModalProps {
 
 const DeleteBlogModal = ({ blogId }: DeleteBlogModalProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { jwtToken, getCurrentUser } = useAuth();
+  const { jwtToken } = useAuth();
 
   const deleteBlog = async (blogId: string) => {
     const response = await makeAuthenticatedRequest(
