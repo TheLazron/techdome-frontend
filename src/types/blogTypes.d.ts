@@ -8,4 +8,12 @@ interface Blog {
   userId: string;
 }
 
-export { Blog };
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  profileUrl: string;
+  blogs: Blog[];
+}
+
+export { Blog, User };

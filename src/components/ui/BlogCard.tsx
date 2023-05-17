@@ -1,4 +1,11 @@
-import { Badge, Card, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Badge,
+  Card,
+  Flex,
+  Heading,
+  Text,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { format } from "date-fns";
 
 interface BlogCardProps {
@@ -18,12 +25,26 @@ const BlogCard = ({
 
   return (
     <Card p={4} bg="gray.200">
-      <Flex justifyContent={"space-between"} alignItems={"center"}>
-        <Flex direction="column" gap={2}>
-          <Heading size="lg">{title}</Heading>
+      <Flex
+        direction={useBreakpointValue({ base: "column", md: "row" })}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <Flex
+          direction="column"
+          gap={2}
+          alignItems={useBreakpointValue({ base: "center", md: "flex-start" })}
+        >
+          <Heading textAlign={"center"} size="lg">
+            {title}
+          </Heading>
           <Text>{description}</Text>
         </Flex>
-        <Flex direction="column" alignItems={"flex-end"} gap={2}>
+        <Flex
+          direction="column"
+          alignItems={useBreakpointValue({ base: "center", md: "flex-end" })}
+          gap={2}
+        >
           <Flex gap={2}>
             {tags.map((tag: string) => {
               return <Badge colorScheme="purple">{tag}</Badge>;

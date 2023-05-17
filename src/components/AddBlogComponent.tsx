@@ -50,6 +50,7 @@ const CreateBlogModal = () => {
       jwtToken
     );
     console.log("new created", newBlog);
+    onClose();
   };
 
   return (
@@ -74,6 +75,9 @@ const CreateBlogModal = () => {
                     required: true,
                   })}
                 />
+                {errors.title && (
+                  <span className="text-red-300">Enter a valid input</span>
+                )}
               </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Description</FormLabel>
@@ -84,6 +88,9 @@ const CreateBlogModal = () => {
                     required: true,
                   })}
                 />
+                {errors.description && (
+                  <span className="text-red-300">Enter a valid input</span>
+                )}
               </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Blog Content</FormLabel>
@@ -93,6 +100,9 @@ const CreateBlogModal = () => {
                     required: true,
                   })}
                 />
+                {errors.content && (
+                  <span className="text-red-300">Enter a valid input</span>
+                )}
               </FormControl>
 
               <FormControl mt={4}>

@@ -143,7 +143,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: Array<NavItem> = [
-  { label: "Blog", href: "/signup", variant: "ghost" },
+  { label: "Blog", href: "/home", variant: "ghost" },
   {
     label: "Sign Up",
     href: "/auth/signup",
