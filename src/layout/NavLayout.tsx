@@ -8,7 +8,7 @@ interface NavLayoutProps {
 
 const NavLayout = ({ children }: NavLayoutProps): JSX.Element => {
   return (
-    <Flex direction="column" width="100vw" height="100vh">
+    <Flex direction="column" height="100vh">
       <Navbar />
       <Flex width="100%" flex="1">
         {children}

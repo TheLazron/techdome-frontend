@@ -1,7 +1,8 @@
-import { Box, Button, Flex, Heading } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Spinner } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import UserProfileHeader from "../components/UserProfileHeader";
 import BlogCard from "../components/ui/BlogCard";
+import { NavLink } from "react-router-dom";
 import { loggedUser, useAuth } from "../context/userContext";
 import { makeAuthenticatedRequest } from "../utils/axiosUtils";
 import { Blog } from "../types/blogTypes";
@@ -48,15 +49,20 @@ const MyProfilePage = (): JSX.Element => {
             </Heading>
             <Button bgColor="brand.black">+Create New</Button>
           </Flex>
-          {blogs.map((blog: Blog) => (
-            <BlogCard
-              key={blog.id}
-              title={blog.title}
-              description={blog.description}
-              tags={blog.tags}
-              createdOn={new Date(blog.createdOn)}
-            />
-          ))}
+          {!blogs ? (
+            <Spinner />
+          ) : (
+            blogs.map((blog: Blog) => (
+              <NavLink to={`/blog/${blog.id}`} key={blog.id}>
+                <BlogCard
+                  title={blog.title}
+                  description={blog.description}
+                  tags={blog.tags}
+                  createdOn={new Date(blog.createdOn)}
+                />
+              </NavLink>
+            ))
+          )}
         </Flex>
       </Flex>
     </Flex>
