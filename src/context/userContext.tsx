@@ -8,7 +8,7 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-interface loggedUser {
+export interface loggedUser {
   name?: string;
   id: string;
   profileUrl?: string;
@@ -101,6 +101,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     logIn,
     signOut,
     getCurrentUser,
+    jwtToken,
   };
 
   return (

@@ -4,6 +4,7 @@ import NavLayout from "./layout/NavLayout";
 import AuthPage from "./pages/AuthenticationPage";
 import LoginCard from "./components/LoginInCard";
 import SignUpCard from "./components/SignUpCard";
+import MyProfilePage from "./pages/MyProfilePage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="login" element={<LoginCard />} />
             <Route path="signup" element={<SignUpCard />} />
           </Route>
+          <Route path="/my-profile/" element={<MyProfilePage />} />
         </Routes>
       </NavLayout>
     </Router>
