@@ -1,30 +1,33 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { makeAuthenticatedRequest } from "../utils/axiosUtils";
-import { useAuth } from "../context/userContext";
+import { loggedUser, useAuth } from "../context/userContext";
 import { Blog } from "../types/blogTypes";
 import {
   Badge,
   Box,
   Button,
-  Center,
-  Divider,
+  Stack,
   Flex,
   Heading,
   Icon,
   Spinner,
+  IconButton,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import BlogHeader from "../components/BlogHeader";
-import { ChevronRightIcon } from "@chakra-ui/icons";
+import { ChevronRightIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import DividerComponent from "../components/ui/Divider";
 import RecommendationPanel from "../components/RecommendationPanel";
+import DeleteBlogModal from "../components/DeleteBlogModal";
 
 const BlogPage = (): JSX.Element => {
   const { blogId } = useParams();
-  const { jwtToken } = useAuth();
+  const { jwtToken, getCurrentUser } = useAuth();
   const [blog, setBlog] = useState<Blog>();
+
+  const currentUser: loggedUser = getCurrentUser();
 
   useEffect(() => {
     const fetchBlogData = async () => {
@@ -50,13 +53,21 @@ const BlogPage = (): JSX.Element => {
       <Box height={["10rem", "20rem"]} color="whiteAlpha.800">
         <BlogHeader title={blog.title} />
       </Box>
-      <Center height="50px">
-        <Divider
-          orientation="horizontal"
-          color="blackAlpha.900"
-          borderWidth="2px"
-        />
-      </Center>
+      {currentUser && currentUser.id === blog.userId ? (
+        <Stack direction="row" alignSelf="flex-end" gap={2}>
+          <DeleteBlogModal blogId={blog.id} />
+          <IconButton
+            p={2}
+            rounded={"full"}
+            colorScheme="gray"
+            size="md"
+            icon={<EditIcon />}
+            aria-label={""}
+          />
+        </Stack>
+      ) : null}
+
+      <DividerComponent />
       <Box
         width="100%"
         display="flex"
