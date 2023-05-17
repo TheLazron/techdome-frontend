@@ -31,6 +31,7 @@ const BlogHeader = ({ title }: BlogHeaderProps) => {
         fontWeight={"thin"}
         fontSize={fontSize}
         letterSpacing={letterSpacing}
+        textAlign={"center"}
       >
         {`${title}`.toUpperCase()}
       </Heading>

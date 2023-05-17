@@ -8,14 +8,15 @@ import {
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { makeAuthenticatedRequest } from "../utils/axiosUtils";
-import { useAuth } from "../context/userContext";
+import { loggedUser, useAuth } from "../context/userContext";
 import { Blog, User } from "../types/blogTypes";
 import BlogCard from "../components/ui/BlogCard";
 import DividerComponent from "../components/ui/Divider";
 import UserCard from "../components/ui/UserCard";
 
 const HomePage = (): JSX.Element => {
-  const { jwtToken } = useAuth();
+  const { getCurrentUser, jwtToken } = useAuth();
+  const loggedUser: loggedUser = getCurrentUser();
   const [blogs, setBlogs] = useState([]);
   const [users, setUsers] = useState([]);
 
@@ -39,6 +40,9 @@ const HomePage = (): JSX.Element => {
       );
       console.log(data);
       setUsers(data.data);
+      setUsers((users) => {
+        return users.filter((user: User) => user.email !== loggedUser.email);
+      });
     };
 
     fetchBlogs();

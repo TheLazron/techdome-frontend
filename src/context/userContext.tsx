@@ -95,6 +95,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return currentUser;
   };
 
+  const updateCurrentUser = (updatedUser: Partial<loggedUser>) => {
+    setCurrentUser((prevUser) => ({
+      ...(prevUser as loggedUser),
+      ...updatedUser,
+    }));
+  };
+
   // Create the auth context value
   const authContextValue = {
     signUp,
@@ -102,6 +109,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     signOut,
     getCurrentUser,
     jwtToken,
+    updateCurrentUser,
   };
 
   return (

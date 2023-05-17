@@ -2,37 +2,32 @@ import { Box, Flex, Heading, Spinner } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import UserProfileHeader from "../components/UserProfileHeader";
 import BlogCard from "../components/ui/BlogCard";
-import { NavLink } from "react-router-dom";
-import { loggedUser, useAuth } from "../context/userContext";
+import { NavLink, useParams } from "react-router-dom";
 import { makeAuthenticatedRequest } from "../utils/axiosUtils";
 import { Blog } from "../types/blogTypes";
-import CreateBlogModal from "../components/AddBlogComponent";
-import UserPopOver from "../components/userProfilePop";
-// import { loggedUser, useAuth } from "../context/userContext";
-
-const MyProfilePage = (): JSX.Element => {
+import { useAuth } from "../context/userContext";
+import { User } from "../types/blogTypes";
+const UserPage = () => {
   const { jwtToken } = useAuth();
+  const { userId } = useParams();
 
-  const { getCurrentUser } = useAuth();
-  const user: loggedUser = getCurrentUser();
-
-  const [blogs, setBlogs] = useState([]);
-
+  const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     const fetchBlogs = async () => {
       const data = await makeAuthenticatedRequest(
-        "http://localhost:3300/get-my-blogs",
+        `http://localhost:3300/get-user/${userId}`,
         {},
         "GET",
         jwtToken
       );
       console.log(data);
-      setBlogs(data.data);
+      setUser(data.data);
     };
 
     fetchBlogs();
   }, []);
 
+  const blogCount = user?.blogs.length ?? 0;
   return (
     <Flex color="brand.primary" width="100%" direction={"column"}>
       <Box
@@ -45,33 +40,28 @@ const MyProfilePage = (): JSX.Element => {
         alignItems="center"
         pl={20}
       >
-        <Flex>
-          {user ? (
-            <UserProfileHeader
-              username={user.name!}
-              profileUrl={user.profileUrl!}
-              blogCount={user.blogCount!}
-              email={user.email!}
-            />
-          ) : null}
-          {user ? (
-            <UserPopOver username={user.name!} profileUrl={user.profileUrl!} />
-          ) : null}
-        </Flex>
+        {user ? (
+          <UserProfileHeader
+            username={user?.name as string}
+            email={user?.email as string}
+            profileUrl={user?.profileUrl as string}
+            blogCount={blogCount as number}
+          />
+        ) : (
+          <Spinner ml={10} />
+        )}
       </Box>
       <Flex direction="column" mx="5" alignItems={"center"} mt={8}>
         <Flex direction="column" w="70%" gap={5}>
           <Flex justifyContent={"space-between"} alignItems={"center"}>
             <Heading size={"lg"} alignSelf={"flex-start"} color={"brand.black"}>
-              My Blogs
+              User Blogs
             </Heading>
-
-            <CreateBlogModal />
           </Flex>
-          {!blogs ? (
+          {!user ? (
             <Spinner />
           ) : (
-            blogs.map((blog: Blog) => (
+            user.blogs.map((blog: Blog) => (
               <NavLink to={`/blog/${blog.id}`} key={blog.id}>
                 <BlogCard
                   title={blog.title}
@@ -88,4 +78,4 @@ const MyProfilePage = (): JSX.Element => {
   );
 };
 
-export default MyProfilePage;
+export default UserPage;

@@ -12,6 +12,7 @@ import SignUpCard from "./components/SignUpCard";
 import MyProfilePage from "./pages/MyProfilePage";
 import BlogPage from "./pages/BlogPage";
 import HomePage from "./pages/HomePage";
+import UserPage from "./pages/UserPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           </Route>
           <Route path="/my-profile/" element={<MyProfilePage />} />
           <Route path="/blog/:blogId" element={<BlogPage />} />
+          <Route path="/user/:userId" element={<UserPage />} />
         </Routes>
       </NavLayout>
     </Router>
