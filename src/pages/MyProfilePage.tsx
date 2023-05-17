@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import { loggedUser, useAuth } from "../context/userContext";
 import { makeAuthenticatedRequest } from "../utils/axiosUtils";
 import { Blog } from "../types/blogTypes";
+import CreateBlogModal from "../components/AddBlogComponent";
 
 const MyProfilePage = (): JSX.Element => {
   const { jwtToken } = useAuth();
@@ -47,7 +48,8 @@ const MyProfilePage = (): JSX.Element => {
             <Heading size={"lg"} alignSelf={"flex-start"} color={"brand.black"}>
               My Blogs
             </Heading>
-            <Button bgColor="brand.black">+Create New</Button>
+
+            <CreateBlogModal />
           </Flex>
           {!blogs ? (
             <Spinner />
